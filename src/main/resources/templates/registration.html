@@ -1,0 +1,45 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" th:src="@{/js/myScript.js}"></script>
+</head>
+<body>
+	<header>
+		<div class="header_top_part">
+			<div th:insert="menu.html"></div>
+		</div>
+		<div class="header_bottom_part">
+			<h1>S'ENREGISTRER</h1>
+		</div>
+	</header>
+	<div class="page_formulaire">
+		<form th:action="@{/registration}" method="post" th:object="${user}">
+
+			<div class="col-md-6 form-group">
+				<label for="name">NAME</label> <input type="text" th:field="*{name}"
+					id="name" class="form-control">
+			</div>
+			
+			<div class="col-md-6 form-group">
+				<label for="password">PASSWORD</label> <input type="text"
+					th:field="*{password}" id="password" class="form-control">
+			</div>
+			<div class="col-md-6 form-group">
+				<label for="email">EMAIL</label> <input type="text"
+					th:field="*{email}" id="email" class="form-control">
+			</div>
+			
+
+			<div>
+				<button type="submit" class="btn btn-primary btn-block mt-3">S'enregistrer</button>
+			</div>
+
+		</form>
+		<footer>
+			<div th:insert="footer.html"></div>
+		</footer>
+	</div>
+</body>
+</html>

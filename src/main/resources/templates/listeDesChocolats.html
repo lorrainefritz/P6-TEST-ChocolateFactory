@@ -1,0 +1,43 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Chocolate</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="bloc_page">
+		<header>
+			<div class="header_top_part">
+				<div th:insert="menu.html"></div>
+			</div>
+			<div class="header_bottom_part">
+				<h1>TOUS LES CHOCOLATS</h1>
+			</div>
+		</header>
+		<table class="table">
+			<thead class="table top">
+				<tr>
+					<th>ID</th>
+					<th>NOM</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="chocolate:${chocolates}">
+					<td th:text="${chocolate.id}"></td>
+					<td th:text="${chocolate.name}"></td>
+					<td><a
+						onclick="return confirm('êtes vous sur de vouloir supprimer?')"
+						th:href="@{deleteChocolate(id=${chocolate.id})}">
+							Supprimer</a></td>
+					<td><a
+						th:href="@{editChocolate(id=${chocolate.id})}">
+							Modifier</a></td>		
+				</tr>
+			</tbody>
+		</table>
+		<footer>
+			<div th:insert="footer.html"></div>
+		</footer>
+	</div>
+</body>
+</html>

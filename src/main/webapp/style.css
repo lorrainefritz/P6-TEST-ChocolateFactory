@@ -1,0 +1,353 @@
+@charset "UTF-8";
+
+/* ---------------------------------------------------------------- */
+/* body */
+body {
+	text-align: justify;
+	margin-left: 5%;
+	margin-right: 5%;
+	font-family: Georgia;
+}
+
+/* ---------------------------------------------------------------- */
+/* header */
+.navigation_menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.navigation_menu .logo {
+	display: flex;
+	justify-content: center;
+}
+
+.menu_header {
+	display: flex;
+	align-items: center;
+	padding-left: 5%;
+	padding-right: 5%;
+	padding-bottom: 1%;
+	padding-top: 1%;
+	justify-content: space-between;
+	background-color: rgb(128, 64, 0); 
+	font-family: Georgia;
+	color: white;
+}
+
+/* #menu_element {
+	border: 1px solid pink;
+	padding-left: 5%;
+	padding-right: 5%;
+} */
+
+.menu_header a {
+	color: white;
+}
+
+/* pour les menus cachés */
+/*le conteneur du dropdown*/
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+/* le dropdown_content qui est caché par défaut */
+.dropdown_content {
+	display: none;
+	position: absolute;
+	background-color: rgb(128, 64, 0);
+	width: 100%;
+	overflow: auto;
+}
+
+.dropdown_content a {
+	padding: 13px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown_content a:hover {
+	background-color: #808080;
+}
+
+.dropdown:hover .dropdown_content {
+	display: block;
+}
+
+.dropdown:hover .droping {
+	background-color: #0080ff215215215;
+}
+
+/* .menu_header div{
+	background-color: white;		
+} */
+
+/* titre de page */
+header .header_bottom_part {
+	text-align: center;
+	border: 1px black solid;
+}
+/* ------------------------------------------------------------------------------- */
+/* home page */
+
+/* image d'accueil sur la page principale */
+.header_midle_part {
+	background-color: rgb(215, 215, 215);
+}
+
+.image_holder {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: rgb(255, 198, 140);
+}
+
+/* articles */
+.home_articles_setion {
+	background-color: rgb(255, 198, 140);
+}
+
+.home_articles_setion article {
+	display: flex;
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 1%;
+	overflow: auto;
+}
+/* l'interieur de l'article */
+.home_articles_setion .text_article {
+	margin-left: 5%;
+	margin-right: 5%;
+	padding-left: 5%;
+	padding-right: 5%;
+	background-color: white;
+}
+
+/* ---------------------------------------------------------------- */
+/* ajouter des Sites d'escalade */
+.page_formulaire {
+	background-color: rgb(255, 198, 140);
+}
+
+.formulaire {
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+/* pour la mention officiel des amis de l'escalade */
+.tag {
+	padding-top: 1%;
+	/* border : 3px red solid; */
+}
+/* permet de prendre toute la largeur pour les champs du formulaire */
+input[type=text] {
+	width: 100%;
+	display: block;
+	padding: 12px 15px;
+	margin: 8px 0;
+	box-sizing: border-box;
+}
+/* modification du bouton pour soumettre le formulaire */
+.btn_form_submit {
+	padding: 12px 28px;
+	background-color: rgb(255, 141, 57);
+	border-radius: 12px;
+	color: white;
+}
+
+.btn_form_submit:hover {
+	background-color: rgb(19, 87, 149);
+	color: white;
+}
+/* ---------------------------------------------------------------- */
+/* S'inscrire : REMARQUE LE BOUTON EST LE MEME QUE CI DESSUS */
+.page_formulaire_inscription {
+	background-color: rgb(255, 141, 57);
+}
+
+.formulaire_inscription {
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+/* ---------------------------------------------------------------- */
+/* Liste des Sites d'escalade */
+
+/* tableau climbingSiteList */
+table {
+	border-collapse: collapse;
+}
+
+td {
+	border: 1px solid black;
+}
+/* ---------------------------------------------------------------- */
+/* A propose de l'association */
+
+.presentation_association_page {
+	/* padding-top: 5%;
+	padding-bottom: 5%; */
+	background-color: rgb(255, 141, 57);
+}
+.presentation_association_page article {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	margin-left: 5%;
+	margin-right: 5%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	background-color: rgb(255, 141, 57);
+	overflow: auto;
+}
+.image_group{
+	/* border: 1px blue solid; */
+	
+	
+}
+.presentation_association_page article p{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	background-color: white;
+}
+/* ---------------------------------------------------------------- */
+/* mentions legales*/
+
+.mention_page {
+	/* padding-top: 5%;
+	padding-bottom: 5%; */
+	background-color: rgb(255, 141, 57);
+	
+}
+.mention_page article{
+	display: flex;
+	justify-content: space-arround;
+	flex-direction: column;
+	margin-left: 5%;
+	margin-right: 5%;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	background-color: rgb(255, 141, 57);
+	overflow: auto;
+	
+}
+.mention_page article .mention_leg{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-top: 1%;
+	background-color: white;
+}
+.mention_page article p{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	/* background-color: white; */
+	
+}
+/* ---------------------------------------------------------------- */
+/* contact*/
+
+.contact_page {
+	background-color: rgb(255, 141, 57);
+	/* border: 1px blue solid; */
+	 padding-top: 1%;
+	padding-bottom: 1%;
+	}
+	
+.contact_element{
+	margin-left: 5%;
+	margin-right: 5%;
+	/* margin-top: 1%;
+	margin-bottom:1%; */
+	padding-top: 1%;
+	padding-bottom: 1%;
+	background-color: white;
+	/* border: 1px red solid; */
+}
+.contact_element p{
+	padding-top: 1%;
+	padding-bottom: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+}
+/* ---------------------------------------------------------------- */
+/* erreurs */
+.element_danger {
+	color: red;
+}
+
+/* ---------------------------------------------------------------- */
+/* footer */
+footer {
+	border: 1px solid black;
+	background-color: rgb(128, 64, 0);
+}
+
+.part_supp_footer {
+	margin-top: 1%;
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-bottom: 1%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-family: Georgia;
+}
+
+.part_supp_footer a {
+	color: white;
+}
+
+.mentionsEtContact {
+	display: flex;
+	align-items: center;
+	justify-content: space-arround;
+}
+
+.contact {
+	
+}
+
+.mentions_legales {
+	padding-left: 30%;
+	/* border: 3px pink solid; */
+}
+
+.logos_footer {
+	display: flex;
+	align-items: center;
+	display: flex;
+	justify-content: space-arround;
+	margin-left: 5%;
+}
+
+.logo_twitter {
+	padding-left: 5%;
+}
+
+.logo_instagram {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.part_inf_footer {
+	border-top: 1px white solid;
+}
+
+.part_inf_footer p {
+	color: white;
+	text-align: center;
+	font-family: Georgia;
+}
+/*responsive*/
+@media all and (max-width: 1024px) { 
+}

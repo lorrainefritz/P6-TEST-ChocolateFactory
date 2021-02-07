@@ -1,0 +1,35 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>VIVE LE CHOCOLAT</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="bloc_page">
+		<header>
+			<div class="header_top_part">
+				<div th:insert="menu.html"></div>
+			</div>
+			<div class="header_bottom_part">
+				<h1>NEWS</h1>
+			</div>
+		</header>
+
+		<div class=home_articles_setion>
+			<article>
+				<div>
+					<img src="\imagesAndLogos\images\chocoRuby.jpg" alt="chocoRuby.jpg">
+				</div>
+				<div class=text_article>
+					<h2>Nouvelle sorte de chocolat, le chocolat ruby</h2>
+					<p>Cette nouvelle sorte de chocolat est Belge</p>
+				</div>
+			</article>
+		</div>
+
+	</div>
+	<footer>
+		<div th:insert="footer.html"></div>
+	</footer>
+</body>
+</html>

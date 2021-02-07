@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" th:src="@{/js/myScript.js}"></script>
+</head>
+<body>
+	<header>
+		<div class="header_top_part">
+			<div th:insert="menu.html"></div>
+		</div>
+		<div class="header_bottom_part">
+			<h1>AJOUTER DES CHOCOLATS</h1>
+		</div>
+	</header>
+	<div class="page_formulaire">
+		<form th:action="@{/ajouterDesChocolats}" th:object="${chocolate}"
+			method="post" class="formulaire" name="formulaire">
+			
+			<div class="col-md-6 form-group">
+				<label>ID</label> <input type="hidden" id="id" class="form-control"
+					th:field="*{id}">
+			</div>
+		
+			
+			<div class="col-md-6 form-group">
+				<label>NOM</label> <input type="text" id="name" class="form-control"
+					th:field="*{name}">
+			</div>
+			<div class="element_danger">
+				<div id="error"></div> 
+				<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+			</div>
+
+
+			<div>
+				<button type="submit" class="btn btn-primary btn-block mt-3" onclick="validate()">ajouter un chocolat
+				</button>
+			</div>
+
+		</form>
+	</div>
+	<footer>
+		<div th:insert="footer.html"></div>
+	</footer>
+
+</body>
+</html>
