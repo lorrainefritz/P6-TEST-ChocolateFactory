@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 
 import javax.servlet.Registration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,8 +20,11 @@ import com.chocolateFactory.Chocolate.dto.UserRegistrationDto;
 import com.chocolateFactory.Chocolate.entities.User;
 import com.chocolateFactory.Chocolate.entities.Role;
 import com.chocolateFactory.Chocolate.repository.UserRepository;
+import com.chocolateFactory.Chocolate.security.ApplicationSecurityConfig;
 @Service
 public class UserServiceImplementation implements UserService {
+	
+private final Logger logger = LoggerFactory.getLogger(UserServiceImplementation.class);	
 private UserRepository userRepository;
 
 @Autowired
@@ -39,9 +44,11 @@ private BCryptPasswordEncoder passwordEncoder;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		logger.info("IN LOADUSERBYUSERNAME");
 		User user = userRepository.findByEmail(username);
+		logger.info("IN LOADUSERBYUSERNAME AFTER USER CREATION VIA FINDBYEMAIL");
 		if(user== null) {
-			throw new UsernameNotFoundException("Invalid username or Password");
+			throw new UsernameNotFoundException("Invalid email or Password");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getEmail()
 				,user.getPassword(),mapRolesToAuthorities(user.getRoles()));

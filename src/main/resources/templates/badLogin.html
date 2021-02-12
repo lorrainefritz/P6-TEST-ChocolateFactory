@@ -1,0 +1,49 @@
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="style.css">
+<!-- <script type="text/javascript" th:src="@{/js/myScript.js}"></script> -->
+</head>
+<body>
+	<header>
+		<div class="header_top_part">
+			<div th:insert="menu.html"></div>
+		</div>
+		<div class="header_bottom_part">
+			<h1>SE CONNECTER</h1>
+		</div>
+	</header>
+		<div th:if="${param.error}">
+            Invalid username and password.
+        </div>
+        <div th:if="${param.logout}">
+            You have been logged out.
+        </div>
+	<div class="page_formulaire">
+		<form th:action="@{/login}" method="post" class="formulaire"
+			name="formulaire">
+
+			<div class="col-md-6 form-group">
+				<label for="username">NOM D'UTILISATEUR</label> 
+					<input type="text" id="username" name="username" class="form-control" placeholder="Enter Email ID">
+			</div>
+
+			<div class="col-md-6 form-group">
+				<label for="password">PASSWORD</label> 
+					<input type="password" id="password" class="form-control">
+			</div>
+			
+			<div>
+				<button type="submit" id="login-submit" name="login-submit"
+				 class="btn btn-primary btn-block mt-3" value="Login">Connexion</button>
+			</div>
+
+		</form>
+	</div>
+	<footer>
+		<div th:insert="footer.html"></div>
+	</footer>
+</body>
+</html>
