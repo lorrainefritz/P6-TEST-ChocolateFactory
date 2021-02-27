@@ -1,7 +1,9 @@
 package com.chocolateFactory.Chocolate.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -17,6 +19,14 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotBlank;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.chocolateFactory.Chocolate.service.UserServiceImplementation;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,13 +38,14 @@ import lombok.Setter;
 //@Getter
 //@Setter
 //@NoArgsConstructor
-public class User implements Serializable {
-
+//public class User implements Serializable, UserDetails {
+public class User implements Serializable{
 	private static final long serialVersionUID = 1L;
+
 
 	@Id
 	@Column(name = "ID")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
 	@Column(name = "NAME")
@@ -48,6 +59,8 @@ public class User implements Serializable {
 	@Column(name = "EMAIL")
 	@NotBlank
 	private String email;
+	
+	private boolean enabled;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(
@@ -58,12 +71,16 @@ public class User implements Serializable {
 			(name = "ROLE_ID", referencedColumnName = "ID"))
 	private Collection<Role> roles;
 
-	public User(@NotBlank String name, @NotBlank String password, @NotBlank String email,
+
+
+	public User(@NotBlank String name, @NotBlank String password, @NotBlank String email, boolean enabled,
 			Collection<Role> roles) {
 		super();
 		this.name = name;
 		this.password = password;
+		System.out.println("PASSWORD "+ this.password);
 		this.email = email;
+		this.enabled = enabled;
 		this.roles = roles;
 	}
 
@@ -110,6 +127,61 @@ public class User implements Serializable {
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		 Collection<Role> roles = getRoles();
+	        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+	         
+	        for (Role role : roles) {
+	            authorities.add(new SimpleGrantedAuthority(role.getName()));
+	        }         
+		return authorities;
+	}
+
+////	@Override
+//	public Collection<? extends GrantedAuthority> getAuthorities() {
+//		 Collection<Role> roles = getRoles();
+//	        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+//	         
+//	        for (Role role : roles) {
+//	            authorities.add(new SimpleGrantedAuthority(role.getName()));
+//	        }         
+//		return authorities;
+//	}
+	
+	
+	
+	
+//	@Override
+//	public String getUsername() {
+//		return getEmail();
+//	}
+//
+//	@Override
+//	public boolean isAccountNonExpired() {
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean isAccountNonLocked() {
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean isCredentialsNonExpired() {
+//		return true;
+//	}
+
+	
+
 	
 
 }

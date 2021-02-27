@@ -27,7 +27,7 @@ public class Chocolate implements Serializable {
 
 	@Id
 	@Column(name="ID")
-	@GeneratedValue(strategy=GenerationType.AUTO) 
+	@GeneratedValue(strategy=GenerationType.IDENTITY) 
 	private Integer id;
 	
 	@Size(min=2,max=10,message="merci de rentrer de 2 à 10 charactères signé le Back")

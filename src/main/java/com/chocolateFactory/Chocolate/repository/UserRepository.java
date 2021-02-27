@@ -9,6 +9,7 @@ import com.chocolateFactory.Chocolate.entities.User;
 public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByEmail(String email);
 
-//	User findOneByUsername(String username);
+//	User getUserByEmail(String email);
+
 
 }

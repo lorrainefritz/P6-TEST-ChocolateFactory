@@ -1,4 +1,5 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -12,6 +13,30 @@
 		</div>
 		<div class="header_bottom_part">
 			<h1>CONNEXION REUSSIE</h1>
+			<h1>Welcome Back </h1>
+			<h1 th:text="${curentuser.name}"></h1>
+			<div>
+					<!-- On peut faire appel à spring secu authentication pour récuperer certains éléments dans la version 5 -->
+					<!-- <span sec:authentication="principal.username"></span> -->	
+			</div>
+			<table class="table">
+			<thead class="table top">
+			<tr>
+					<th>ID</th>
+					<th>NOM</th>
+					<th>EMAIL</th>
+					<th>ROLE</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td th:text="${curentuser.id}"></td>
+					<td th:text="${curentuser.name}"></td>
+					<td th:text="${curentuser.email}"></td>
+					<td th:text="${principal.authorities}"></td>
+			</tr>
+			</tbody >
+			</table>		
 		</div>
 	</header>
 	<div class="page_formulaire">
