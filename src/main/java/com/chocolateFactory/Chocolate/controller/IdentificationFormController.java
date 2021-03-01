@@ -1,6 +1,7 @@
 package com.chocolateFactory.Chocolate.controller;
 
 import java.security.Principal;
+import java.util.Collection;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,8 +12,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.chocolateFactory.Chocolate.entities.Chocolate;
+import com.chocolateFactory.Chocolate.entities.Role;
 import com.chocolateFactory.Chocolate.entities.User;
 import com.chocolateFactory.Chocolate.service.UserServiceImplementation;
 
@@ -21,6 +25,8 @@ public class IdentificationFormController {
 	@Autowired
 	UserServiceImplementation userServiceImp;
 	private final Logger logger = LoggerFactory.getLogger(IdentificationFormController.class);
+	private UserDetails userPrincipal;
+	private User currentLoggedUser ;
 
 	@GetMapping("/login")
 	public String showLoginForm() {
@@ -32,25 +38,64 @@ public class IdentificationFormController {
 	@GetMapping("/logSuccess")
 	public String managersStatusCheck(Authentication authentication, Model model) {
 		logger.info(" HTTP GET received at /logSuccess");
-	    UserDetails userPrincipal = (UserDetails)authentication.getPrincipal();
-//	    User user =(User)authentication.getPrincipal();
-	    logger.info("USERNAME ="+ userPrincipal.getUsername());  
-	    logger.info("PASSWORD ="+ userPrincipal.getPassword());
-	    logger.info("AUTHORITIES ="+ userPrincipal.getAuthorities());
-	    logger.info("NAME En passant par authentication ="+ authentication.getName());
-	    logger.info("DETAILS En passant par authentication ="+ authentication.getDetails());
-	    
-	    User currentLoggedUser = userServiceImp.findUserOnEmail(userPrincipal.getUsername());;
+	    userPrincipal = (UserDetails)authentication.getPrincipal();
+	    currentLoggedUser = userServiceImp.findUserOnEmail(userPrincipal.getUsername());;
 	    model.addAttribute("curentuser",currentLoggedUser);
 	    model.addAttribute("principal",userPrincipal);
-	    logger.info("USER EMAIL=" + currentLoggedUser.getEmail() );
-	    logger.info("USER NAME ="+ currentLoggedUser.getName() );
-	    logger.info("USER PASSWORD ="+ currentLoggedUser.getPassword() );
-	    logger.info("USER NAME ="+ currentLoggedUser.getId());
+//	    logger.info("USERNAME ="+ userPrincipal.getUsername());  
+//	    logger.info("PASSWORD ="+ userPrincipal.getPassword());
+//	    logger.info("AUTHORITIES ="+ userPrincipal.getAuthorities());
+//	    logger.info("NAME En passant par authentication ="+ authentication.getName());
+//	    logger.info("DETAILS En passant par authentication ="+ authentication.getDetails());
+//	    logger.info("USER EMAIL=" + currentLoggedUser.getEmail() );
+//	    logger.info("USER NAME ="+ currentLoggedUser.getName() );
+//	    logger.info("USER PASSWORD ="+ currentLoggedUser.getPassword() );
+//	    logger.info("USER NAME ="+ currentLoggedUser.getId());
 	  	    return "logSuccess";
 	}
 	
+	@GetMapping("/editPrincipalUser")
+	public String editUser(Model model) {
+		logger.info("HTTP GET received at /editEmail");
+		logger.info("USER EMAIL=" + currentLoggedUser.getEmail() );
+	    logger.info("USER NAME ="+ currentLoggedUser.getName() );
+	    logger.info("USER PASSWORD ="+ currentLoggedUser.getPassword() );
+	    logger.info("USER NAME ="+ currentLoggedUser.getId());
+	    logger.info("USER AUTHORITHIES ="+currentLoggedUser.getAuthorities());
+	    logger.info("USER AUTHORITHIES ="+currentLoggedUser.getRoles());
+	 model.addAttribute("curentuser",currentLoggedUser);
+	 model.addAttribute("principal",userPrincipal);
+		return "editPrincipalUser";
+	}
 	
+	@PostMapping("/editName")
+	public String editName(String name) {
+		logger.info("HTTP GET received at /editEmail");		 
+		 userServiceImp.nameModification(userPrincipal,name);
+		return "redirect:/logSuccess";
+	}	
+	
+
+	@PostMapping("/editEmail")
+	public String editEmail(String email) {
+		logger.info("HTTP GET received at /editEmail");		 
+		 userServiceImp.emailModification(userPrincipal,email);
+		return "redirect:/logout";
+	}
+	
+	@PostMapping("/editPassword")
+	public String editPassword(String password) {
+		logger.info("HTTP GET received at /editPassword");		 
+		 userServiceImp.passwordModification(userPrincipal,password);
+		return "redirect:/logSuccess";
+	}
+
+	@PostMapping("/editRole")
+	public String editRole(Collection<Role> role) {
+		logger.info("HTTP GET received at /editPassword");		 
+		 userServiceImp.roleModification(userPrincipal,role);
+		return "redirect:/logSuccess";
+	}
 	
 //	@GetMapping("/logSuccess")
 //	public ModelAndView showSuccessPage(Principal principal) {

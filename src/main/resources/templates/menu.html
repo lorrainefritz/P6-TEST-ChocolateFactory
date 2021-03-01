@@ -38,12 +38,14 @@
 				<!-- <div id=menu_element>
 					<a href="/listeDesUsers">Liste Des Utilisateurs</a>
 				</div> -->
-				
-				<div id=menu_element sec:authorize ="hasRole('ADMIN')">
+
+				<div id=menu_element sec:authorize="hasRole('ADMIN')">
 					<a href="/listeDesUsers">Liste des Utilisateurs</a>
-				</div> 
+				</div>
 				<div sec:authorize="isAuthenticated()">
-					<img alt="logo isAuth" src="/imagesAndLogos/logos/isAuth.jpg">
+					<a href="/logSuccess"> <img alt="logo isAuth"
+						src="/imagesAndLogos/logos/isAuth.jpg">
+					</a>
 				</div>
 			</div>
 		</div>

@@ -140,9 +140,42 @@ public class UserServiceImplementation implements UserService {
 	public void deleteUser(Integer id) {
 		userRepository.deleteById(id);
 	}
+
 	public User findUserOnEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+//methode de modification à la volée utilisable par la perso connectée
+	public User emailModification(UserDetails userPrincipal, String email) {
+		User user = findUserOnEmail(userPrincipal.getUsername());
+		user.setEmail(email);
+		return userRepository.save(user);
+	}
+
+	public User nameModification(UserDetails userPrincipal, String name) {
+		User user = findUserOnEmail(userPrincipal.getUsername());
+		user.setName(name);
+		return userRepository.save(user);
+		
+	}
+	public User passwordModification(UserDetails userPrincipal, String password) {
+		User user = findUserOnEmail(userPrincipal.getUsername());
+		
+		user.setPassword(passwordEncoder.encode(password));
+		return userRepository.save(user);
+	}
+// méthode d'admin pour admin les roles
+	public User roleModification(UserDetails userPrincipal, Collection<Role> role) {
+		User user = findUserOnEmail(userPrincipal.getUsername());
+		user.setRoles(role);
+		return userRepository.save(user);
+	}
+	public User roleAdd(UserDetails userPrincipal, Role role) {
+		User user = findUserOnEmail(userPrincipal.getUsername());
+		Collection<Role> collectionOfrole= user.getRoles();
+		collectionOfrole.add(role);
+		return userRepository.save(user);
+	}
+	
 	
 
 }
