@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,15 +31,6 @@ public class UserListGestionController {
 		model.put("users",userServiceImp.getAllUsers());
 		return new ModelAndView(viewName,model);
 	}
-	
-	@GetMapping(path="/editUser")
-	public String editUser(Model model, Integer id) {
-		logger.info("HTTP GET received at /editUser" + id);
-		User user = userServiceImp.getOneUserById(id);
-		model.addAttribute("user",user);
-		return "registration";
-	}
-	
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/deleteUser")
 	public String deleteUser(Integer id) {

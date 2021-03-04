@@ -144,38 +144,46 @@ public class UserServiceImplementation implements UserService {
 	public User findUserOnEmail(String email) {
 		return userRepository.findByEmail(email);
 	}
+
 //methode de modification à la volée utilisable par la perso connectée
-	public User emailModification(UserDetails userPrincipal, String email) {
-		User user = findUserOnEmail(userPrincipal.getUsername());
+	public User emailModification(User user, String email) {
 		user.setEmail(email);
 		return userRepository.save(user);
 	}
 
-	public User nameModification(UserDetails userPrincipal, String name) {
-		User user = findUserOnEmail(userPrincipal.getUsername());
+	public User nameModification(User user, String name) {
 		user.setName(name);
 		return userRepository.save(user);
-		
+
 	}
-	public User passwordModification(UserDetails userPrincipal, String password) {
-		User user = findUserOnEmail(userPrincipal.getUsername());
-		
+
+	public User passwordModification(User user, String password) {
+		logger.info("in passwordModification" + password);
 		user.setPassword(passwordEncoder.encode(password));
 		return userRepository.save(user);
 	}
+
 // méthode d'admin pour admin les roles
-	public User roleModification(UserDetails userPrincipal, Collection<Role> role) {
-		User user = findUserOnEmail(userPrincipal.getUsername());
-		user.setRoles(role);
+	public User roleModification(User user, Collection<Role> roles) {
+		logger.info("in roleModification" + roles);
+		user.setRoles(roles);
 		return userRepository.save(user);
 	}
-	public User roleAdd(UserDetails userPrincipal, Role role) {
-		User user = findUserOnEmail(userPrincipal.getUsername());
-		Collection<Role> collectionOfrole= user.getRoles();
-		collectionOfrole.add(role);
+
+	public User deleteRole(User user, Integer id) {
+		logger.info("in deleteRole with id = " + id);
+		List<Role> roles = (List<Role>) user.getRoles();
+		Role role=roles.get(id);
+		roles.remove(role);
 		return userRepository.save(user);
 	}
 	
-	
+
+	public User addRole(User user, Role role) {
+		logger.info("in addRole" + role);
+		Collection<Role> roles = user.getRoles();	
+		roles.add(role);
+		return userRepository.save(user);
+	}
 
 }

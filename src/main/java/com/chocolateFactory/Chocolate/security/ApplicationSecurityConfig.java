@@ -89,6 +89,7 @@ public DaoAuthenticationProvider authenticationProvider() {
 						"/logos/**"
 						).permitAll()
 //				.antMatchers("/listeDesUsers**").hasRole("USER")
+				.antMatchers("/editUser").authenticated()
 				.antMatchers("/listeDesUsers**").hasRole("ADMIN")
 				.anyRequest().authenticated()
 //				.and()

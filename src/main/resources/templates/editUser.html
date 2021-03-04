@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org"
-xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -57,24 +57,49 @@ xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 			</div>
 
 		</form>
-<!-- <div sec:authorize="hasRole('ADMIN')">
-		<form th:action="@{/editRoles}" method="post"
-			th:object="${curentuser}">
-				<div class="col-md-6 form-group">
-				<a th:text="${principal.authorities}">ROLE VERSION AUTHORITIES</a>
-			</div>
+		<div sec:authorize="hasRole('ADMIN')">
+			<form th:action="@{/editRoles}" method="post" th:object="${roles}">
+				<table class="table">
+					<thead class="table top">
+						<tr>
+							<th>ID</th>
+							<th>ROLE</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="role:${roles}">
+							<td th:text="${role.id}"></td>
+							<td th:text="${role.name}"></td>
+							<!-- <td><a th:href="@{deleteRole(id=${role.id})}">Supprimer</a></td> -->
+							<!-- <td><input type="text" name="${role.name}"><a th:href="@{editRole(id=${role.id})}">Modifier</a></td>
+							<td><input type="text" name="${role.name}"><a th:href="@{addRole(name=${role.name})}">Ajouter</a></td> -->
+							<!-- <td>
+								<input type="text" name="*{name}">
+								 <a th:href="@{editRole(role=${role.name}id=${role.id})}"> Modifier</a>
+								 <a th:href="@{deleteRole(role=${role.name})">Supprimer</a>
+							</td> -->
+							<!-- <td></td> -->
+							<!-- <td><a th:href="@{deleteRole(id=${role.id})}"> Supprimer</a></td> -->
+						</tr>
+					</tbody>
+				</table>
 
-			<div class="col-md-6 form-group">
-				<label for="role">ROLE</label> <input type="text"
-					th:field="*{role}" id="role" class="form-control"
-					placeholder="${curentuser.role}">
-			</div>
-			<div>
-				<button type="submit" class="btn btn-primary btn-block mt-3">EDITER
-					ROLE</button>
-			</div>
-		</form>
-</div> -->
+
+				<!-- <div class="col-md-6 form-group">
+					<a th:text="${principal.authorities}">ROLE VERSION AUTHORITIES</a>
+				</div>
+
+				<div class="col-md-6 form-group">
+					<label for="role">ROLE</label> <input type="text"
+						th:field="*{role}" id="role" class="form-control"
+						placeholder="${curentuser.role}">
+				</div>
+				<div>
+					<button type="submit" class="btn btn-primary btn-block mt-3">EDITER
+						ROLE</button>
+				</div> -->
+			</form>
+		</div>
 
 		<footer>
 			<div th:insert="footer.html"></div>
