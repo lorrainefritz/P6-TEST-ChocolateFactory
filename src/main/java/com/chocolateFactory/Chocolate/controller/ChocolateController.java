@@ -24,6 +24,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.chocolateFactory.Chocolate.entities.Chocolate;
 import com.chocolateFactory.Chocolate.repository.ChocolateRepository;
 import com.chocolateFactory.Chocolate.service.ChocolateService;
+import com.chocolateFactory.Chocolate.service.RoleService;
 
 @Controller
 public class ChocolateController {

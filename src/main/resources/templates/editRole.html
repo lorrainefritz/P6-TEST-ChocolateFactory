@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Chocolate</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="bloc_page">
+		<header>
+			<div class="header_top_part">
+				<div th:insert="menu.html"></div>
+			</div>
+			<div class="header_bottom_part">
+				<h1>TOUS LES ROLES</h1>
+			</div>
+		</header>
+		<table class="table">
+			<thead class="table top">
+				<tr>
+					<th>ID</th>
+					<th>NOM</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="role:${roles}">
+					<td th:text="${role.id}"></td>
+					<td th:text="${role.name}"></td>
+					<td><a
+						onclick="return confirm('êtes vous sur de vouloir supprimer?')"
+						th:href="@{deleteRole(id=${role.id})}"> Supprimer</a></td>
+					<td><a th:href="@{editRoleName(id=${role.id})}"> Modifier</a></td> 
+				</tr>
+			</tbody>
+		</table>
+		<div>
+			<a href="addRole">Ajouter un Role</a>
+		</div>
+
+		<footer>
+			<div th:insert="footer.html"></div>
+		</footer>
+	</div>
+</body>
+</html>

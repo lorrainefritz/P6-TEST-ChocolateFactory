@@ -17,25 +17,31 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.chocolateFactory.Chocolate.entities.Role;
 import com.chocolateFactory.Chocolate.entities.User;
+import com.chocolateFactory.Chocolate.service.RoleService;
 import com.chocolateFactory.Chocolate.service.UserServiceImplementation;
 
 @Controller
 public class EditUserController {
 	@Autowired
 	UserServiceImplementation userServiceImp;
+	@Autowired
+	RoleService roleService;
 	private final Logger logger = LoggerFactory.getLogger(IdentificationFormController.class);
 	private UserDetails userPrincipal;
 	private User user;
+	private Collection<Role> userRolesCollection;
 
 	@GetMapping("/editUser")
 	public String editUser(Model model, Authentication authentication, Integer id) {
 		logger.info("HTTP GET received at /editUser");
-		userPrincipal =(UserDetails)authentication.getPrincipal();
+		userPrincipal = (UserDetails) authentication.getPrincipal();
 		user = userServiceImp.findUserOnEmail(userPrincipal.getUsername());
 		logger.info("USER EMAIL=" + user.getEmail());
 		model.addAttribute("curentuser", user);
+		logger.info("NOMBRE DE ROLES=" + roleService.howManyRolesExists());
+		model.addAttribute("globalsRolesList", roleService.getAllRoles());
 		logger.info("USER EMAIL=" + user.getEmail());
-		
+
 //		logger.info("USER EMAIL=" + user.getEmail());
 //		logger.info("USER NAME =" + currentLoggedUser.getName());
 //		logger.info("USER PASSWORD =" + currentLoggedUser.getPassword());
@@ -46,15 +52,19 @@ public class EditUserController {
 
 		return "editUser";
 	}
+
 	@PreAuthorize("hasRole('ADMIN')")
 	@GetMapping("/editUserByIdWhenAdmin")
 	public String editUserByIdWhenAdmin(Model model, Integer id, Authentication authentication) {
 		logger.info("HTTP GET received at /editUserByIdWhenAdmin with user id = " + id);
-		userPrincipal =(UserDetails)authentication.getPrincipal();
+		userPrincipal = (UserDetails) authentication.getPrincipal();
 		user = userServiceImp.getOneUserById(id);
 		model.addAttribute("curentuser", user);
-		logger.info("USER ROLES"+ user.getRoles());
-		model.addAttribute("roles",user.getRoles());
+		logger.info("NOMBRE DE ROLES=" + roleService.howManyRolesExists());
+		model.addAttribute("globalsRolesList", roleService.getAllRoles());
+		userRolesCollection =user.getRoles();
+		logger.info("USER ROLES LISTE SIZE" + userRolesCollection.size()+ " hascode " + userRolesCollection.hashCode()+ userRolesCollection.toString());
+		model.addAttribute("roles", userRolesCollection);
 		return "editUser";
 	}
 
@@ -80,30 +90,31 @@ public class EditUserController {
 		userServiceImp.passwordModification(user, password);
 		return "redirect:/logSuccess";
 	}
-	
-//Methode Admin	pour les roles
-	
+
+//Methode Admin	pour les roles ==================> bien verifier que c'est userRole partout 
+
 	@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping("/editRole")
-	public String editRole(Collection<Role> role, Model model) {
-		logger.info("HTTP GET received at /editRole");
-		userServiceImp.roleModification(user, role);
+	@GetMapping("/deleteUserRole")
+	public String deleteUserRole(Integer id) {
+		logger.info("HTTP GET received at deleteUserRole " + id);
+		userServiceImp.deleteUserRole(user,id);
+		return "redirect:/listeDesUsers";
+	}
+	
+//	@PreAuthorize("hasRole('ADMIN')")
+//	@GetMapping("/deleteUserRole")
+//	public String deleteUserRole(String roleName) {
+//		logger.info("HTTP GET received at deleteUserRole" + roleName);
+//		userServiceImp.deleteUserRole(user, roleName);
+//		return "redirect:/listeDesUsers";
+//	}
+
+	@PreAuthorize("hasRole('ADMIN')")
+	@PostMapping("/addUserRole")
+	public String addUserRole(Role role) {
+		logger.info("HTTP GET received at addUserRole");
+		userServiceImp.addUserRole(user, role);
 		return "redirect:/listeDesUsers";
 	}
 
-	@PreAuthorize("hasRole('ADMIN')")
-	@GetMapping("/deleteRole")
-	public String deleteRole(Integer id) {
-		logger.info("HTTP GET received at deleteRole");
-		userServiceImp.deleteRole(user,id);
-		return "redirect:/listeDesUsers";
-	}
-	@PreAuthorize("hasRole('ADMIN')")
-	@PostMapping("/addRole")
-	public String addRole(Role role) {
-		logger.info("HTTP GET received at addRole");
-		userServiceImp.addRole(user, role);
-		return "redirect:/listeDesUsers";
-	}
-	
 }

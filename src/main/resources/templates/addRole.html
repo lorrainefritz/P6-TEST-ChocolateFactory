@@ -1,0 +1,41 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Chocolate</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="bloc_page">
+		<header>
+			<div class="header_top_part">
+				<div th:insert="menu.html"></div>
+			</div>
+			<div class="header_bottom_part">
+				<h1>AJOUTER DES ROLES</h1>
+			</div>
+		</header>
+		 <form th:action="@{/addRole}" th:object="${role}"
+			method="post" class="formulaire" name="formulaire">
+
+ 			<div class="col-md-6 form-group">
+				<label>ID</label> <input type="hidden" id="id" class="form-control"
+					th:field="*{id}">
+			</div> 
+
+
+			<div class="col-md-6 form-group">
+				<label>NOM</label> <input type="text" id="name" class="form-control"
+					th:field="*{name}">
+			</div>
+
+			<div>
+				<button type="submit" class="btn btn-primary btn-block mt-3">ajouter
+					un role</button>
+			</div>
+		</form>  
+		<footer>
+			<div th:insert="footer.html"></div>
+		</footer>
+	</div>
+</body>
+</html>

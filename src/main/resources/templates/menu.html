@@ -42,6 +42,9 @@
 				<div id=menu_element sec:authorize="hasRole('ADMIN')">
 					<a href="/listeDesUsers">Liste des Utilisateurs</a>
 				</div>
+				<div id=menu_element sec:authorize="hasRole('ADMIN')">
+					<a href="/editRole">Editer les roles</a>
+				</div>
 				<div sec:authorize="isAuthenticated()">
 					<a href="/logSuccess"> <img alt="logo isAuth"
 						src="/imagesAndLogos/logos/isAuth.jpg">

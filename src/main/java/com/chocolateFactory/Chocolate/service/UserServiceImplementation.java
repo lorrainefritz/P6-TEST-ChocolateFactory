@@ -1,5 +1,6 @@
 package com.chocolateFactory.Chocolate.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -29,6 +30,9 @@ public class UserServiceImplementation implements UserService {
 
 	private final Logger logger = LoggerFactory.getLogger(UserServiceImplementation.class);
 	private UserRepository userRepository;
+	
+	@Autowired
+	private RoleService roleService;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -40,10 +44,21 @@ public class UserServiceImplementation implements UserService {
 
 	@Override
 	public User save(UserRegistrationDto registrationDto) {
+		Role roleUserParDefaut = roleService.getOneRoleById(1);
+		logger.info("IN SAVE USER and roleUserParDefaut= " + roleUserParDefaut.getName());
 		User user = new User(registrationDto.getName(), passwordEncoder.encode(registrationDto.getPassword()),
-				registrationDto.getEmail(), false, Arrays.asList(new Role("ROLE_USER")));
+				registrationDto.getEmail(), false, Arrays.asList(roleUserParDefaut));
 		return userRepository.save(user);
-	}
+	}	
+		
+//	
+//	@Override
+//	public User save(UserRegistrationDto registrationDto) {
+//		Role roleUserParDefaut = roleService.getOneRoleById(1);
+//		User user = new User(registrationDto.getName(), passwordEncoder.encode(registrationDto.getPassword()),
+//				registrationDto.getEmail(), false, Arrays.asList(new Role("ROLE_USER")));
+//		return userRepository.save(user);
+//	}
 
 //	@Override
 //	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -163,23 +178,41 @@ public class UserServiceImplementation implements UserService {
 		return userRepository.save(user);
 	}
 
-// méthode d'admin pour admin les roles
-	public User roleModification(User user, Collection<Role> roles) {
+//// méthode d'admin pour admin les roles des user bien changer partout en user
+	public User roleUserModification(User user, Collection<Role> roles) {
 		logger.info("in roleModification" + roles);
 		user.setRoles(roles);
 		return userRepository.save(user);
 	}
 
-	public User deleteRole(User user, Integer id) {
-		logger.info("in deleteRole with id = " + id);
-		List<Role> roles = (List<Role>) user.getRoles();
-		Role role=roles.get(id);
-		roles.remove(role);
+	public User deleteUserRole(User user, Integer id) {
+		logger.info("in deleteRole with roleName = " + id);
+		List<Role> useroleColle= (List<Role>) user.getRoles();
+		Role role = useroleColle.get(id);
+		useroleColle.remove(role);
+		user.setRoles(useroleColle);
 		return userRepository.save(user);
-	}
+	}	
+	
+	
+	
+	
+	
+	
+//	public User deleteUserRole(User user, String roleName) {
+//		logger.info("in deleteRole with roleName = " + roleName);
+//		Role role =roleService.getOneByName(roleName);
+//		logger.info("in deleteRole with role = " + role.getName()+role.getId() +"and user is " + user.getName());
+//		List<Role> roles = (List<Role>)user.getRoles();
+//		Role rolo = roles.get(1);
+//		logger.info("in deleteRole roles "
+//				+ "contains role = " + roles.contains(role)+" "+ role.getName()+ " " +role.getId() 
+//				+ " contains rolo = " +roles.contains(rolo) +" "+ rolo.getName()+ " " +rolo.getId());			
+//		return userRepository.save(user);
+//	}
 	
 
-	public User addRole(User user, Role role) {
+	public User addUserRole(User user, Role role) {
 		logger.info("in addRole" + role);
 		Collection<Role> roles = user.getRoles();	
 		roles.add(role);

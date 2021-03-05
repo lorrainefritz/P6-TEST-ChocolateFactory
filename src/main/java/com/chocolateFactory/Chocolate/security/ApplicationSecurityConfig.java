@@ -90,7 +90,7 @@ public DaoAuthenticationProvider authenticationProvider() {
 						).permitAll()
 //				.antMatchers("/listeDesUsers**").hasRole("USER")
 				.antMatchers("/editUser").authenticated()
-				.antMatchers("/listeDesUsers**").hasRole("ADMIN")
+				.antMatchers("/listeDesUsers**","/editRole**").hasRole("ADMIN")
 				.anyRequest().authenticated()
 //				.and()
 //				.httpBasic()
